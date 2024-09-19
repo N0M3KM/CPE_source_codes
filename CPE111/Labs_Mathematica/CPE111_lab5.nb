@@ -1,0 +1,492 @@
+Notebook[{Cell[
+TextData[{StyleBox[RowBox[{"\:0e0a\:0e37\:0e48\:0e2d"," ","\:0e14\:0e23\:0e31\:0e13"," ","\:0e22\:0e38\:0e04\:0e41\:0e1c\:0e19"," ","\:0e23\:0e2b\:0e31\:0e2a\:0e19\:0e31\:0e01\:0e28\:0e36\:0e01\:0e29\:0e32"," "}]],"67070501016"}],
+"Text",CellChangeTimes -> {{3934369216.550366`,3934369221.848827`}},ExpressionUUID -> "d632aedd-2904-4715-978e-f26e5a6ec5ea"],Cell[
+CellGroupData[
+{Cell[
+"\<Bayesian Spam Filter\>","Title",CellChangeTimes -> {{3934355826.8179607`,3934355856.574212`}},
+ExpressionUUID -> "fd953687-9f16-464b-8f46-1385fb7f0b92"],Cell[
+CellGroupData[{Cell[
+
+"\<Introduction\>","Section",CellChangeTimes -> {{3934366981.312007`,3934366987.95928`}},
+ExpressionUUID -> "1484ea2a-d0cc-4268-9631-c29d4196ef47"],Cell[
+"\<	\:0e43\:0e19\:0e27\:0e31\:0e19\:0e2d\:0e31\:0e07\:0e04\:0e32\:0e23\:0e17\:0e35\:0e48 3 \:0e01\:0e31\:0e19\:0e22\:0e32\:0e22\:0e19 \:0e2d\:0e32\:0e08\:0e32\:0e23\:0e22\:0e4c\:0e17\:0e27\:0e35\:0e0a\:0e31\:0e22\:0e44\:0e14\:0e49\:0e44\:0e1b\:0e02\:0e38\:0e14\:0e02\:0e49\:0e2d\:0e21\:0e39\:0e25\:0e08\:0e32\:0e01 LEB3 \:0e21\:0e32\:0e2b\:0e25\:0e31\:0e07\:0e08\:0e32\:0e01\:0e17\:0e35\:0e48\:0e44\:0e14\:0e49\:0e16\:0e2d\:0e14\:0e23\:0e2b\:0e31\:0e2a admin \:0e44\:0e14\:0e49 \:0e41\:0e25\:0e30\:0e1e\:0e1a\:0e27\:0e48\:0e32\:0e21\:0e35\:0e01\:0e32\:0e23\:0e2a\:0e48\:0e07\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21\:0e41\:0e1b\:0e25\:0e01\:0e46 \:0e40\:0e02\:0e49\:0e32\:0e21\:0e32\:0e43\:0e19\:0e0a\:0e48\:0e2d\:0e07\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21\:0e1a\:0e19\:0e2b\:0e19\:0e49\:0e32\:0e40\:0e27\:0e47\:0e1a\:0e40\:0e1b\:0e47\:0e19\:0e08\:0e33\:0e19\:0e27\:0e19\:0e21\:0e32\:0e01 \:0e1b\:0e23\:0e32\:0e01\:0e0e\:0e14\:0e31\:0e07\:0e15\:0e31\:0e27\:0e41\:0e1b\:0e23\:0e14\:0e49\:0e32\:0e19\:0e25\:0e48\:0e32\:0e07
+	\:0e40\:0e19\:0e37\:0e48\:0e2d\:0e07\:0e08\:0e32\:0e01 LEB3 \:0e40\:0e1b\:0e47\:0e19 web application \:0e17\:0e35\:0e48\:0e21\:0e35\:0e04\:0e27\:0e32\:0e21\:0e1b\:0e25\:0e2d\:0e14\:0e20\:0e31\:0e22\:0e2a\:0e39\:0e07\:0e21\:0e32\:0e01\:0e46 \:0e41\:0e25\:0e30\:0e23\:0e30\:0e1a\:0e1a\:0e20\:0e32\:0e22\:0e43\:0e19\:0e2a\:0e32\:0e21\:0e32\:0e23\:0e16\:0e1b\:0e23\:0e30\:0e21\:0e27\:0e25\:0e1c\:0e25\:0e40\:0e0a\:0e34\:0e07\:0e25\:0e36\:0e01\:0e44\:0e14\:0e49 \:0e42\:0e14\:0e22\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21\:0e17\:0e35\:0e48\:0e2a\:0e48\:0e07\:0e40\:0e02\:0e49\:0e32\:0e21\:0e32\:0e17\:0e32\:0e07\:0e0a\:0e48\:0e2d\:0e07\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21\:0e19\:0e31\:0e49\:0e19\:0e08\:0e30\:0e16\:0e39\:0e01\:0e17\:0e33\:0e19\:0e32\:0e22\:0e27\:0e48\:0e32\:0e40\:0e1b\:0e47\:0e19 spam \:0e2b\:0e23\:0e37\:0e2d\:0e44\:0e21\:0e48 \:0e2b\:0e32\:0e01\:0e44\:0e21\:0e48\:0e43\:0e0a\:0e48 \:0e08\:0e30\:0e08\:0e31\:0e14\:0e2b\:0e21\:0e27\:0e14\:0e2b\:0e21\:0e39\:0e48\:0e40\:0e1b\:0e47\:0e19 ham \>",
+"Text",CellChangeTimes -> {{3934356543.156026`,3934356648.0391493`},{3934356690.633881`,3934356702.498498`},{3934356866.057852`,3934356872.07539`},{3934364923.1006303`,3934364925.3251233`},3934368854.72575`},
+ExpressionUUID -> "9b52ec50-c92c-449f-8043-28512f09d9a1"],Cell[
+BoxData[RowBox[{RowBox[
+{"data"," ","="," ",RowBox[{"{","\n","  ",RowBox[{RowBox[{"{",RowBox[{"\"Spam\"",","," ","\"Win money now\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Cheap loans available\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"How are you doing today\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Meeting at noon\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Exclusive offer just for you\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Lunch tomorrow\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Congratulations you have won a prize\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Can we reschedule our call\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Free vacation package\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Dont forget to bring the documents\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Act now limited time offer\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Dinner at my place this weekend\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Earn cash quickly and easily\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Heres the report you requested\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Lowest prices on meds\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Lets catch up soon\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Urgent verify your account information\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Happy birthday have a great day\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Claim your free gift card\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Can you send me the file\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"You have been pre approved for a credit card\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Looking forward to our meeting\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Get rich with this simple trick\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Please review the attached document\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Thank you for your help yesterday\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Win a brand new car today\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Are you available for a quick call\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Free stock tips\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"See you at the game tonight\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Unlock your potential with our course\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Limited time offer act fast\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Can you help me with this task\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Your account has been compromised\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Double your income in days\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"What time is our flight\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Guaranteed weight loss\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"New season sale up to ninety percent off\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Meeting minutes from yesterday\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"See you at the office tomorrow\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Get paid working from home\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Investment secrets they dont want you to know\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Lets go for a walk this evening\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"You won a new phone\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Reduce your debt now\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Can you join the call later\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Remember to send the invoice\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Unlock your free trial today\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Save big on insurance premiums\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Weekend plans still on\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Your loan is approved\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Special discount just for you\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Send me the updated file please\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Act fast to claim your reward\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Increase your credit score now\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"Can you pick up the groceries\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Free gift with purchase\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Ham\"",","," ","\"See you at the gym later\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Best deals on the market\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Exclusive savings waiting for you\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Instant cash rewards\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Get your free consultation\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Special offer available now\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Unlock special benefits\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Start earning today\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Receive your free bonus\""}],"}"}],",","\n","  ",RowBox[
+{"{",RowBox[{"\"Spam\"",","," ","\"Free delivery on all orders\""}],"}"}]}],"\n","}"}]}],";"}]],
+"Code",CellChangeTimes -> {3934257946.601112`,3934283232.089233`,{3934283269.710363`,3934283270.125515`},{3934355807.003571`,3934355808.3746266`},{3934368310.017076`,3934368324.840464`},{3934368409.406987`,3934368409.7976246`}},
+CellLabel -> "In[1]:= ",ExpressionUUID -> "e315b85a-f5cb-4a0d-9825-26216f708e71"]},
+Open],ExpressionUUID -> "54619856-08a5-478c-95a8-8f51109a2ce0"],Cell[
+CellGroupData[
+{Cell[
+"\<Something missing\>","Section",CellChangeTimes -> {{3934367000.6638727`,3934367022.881609`},{3934369133.488164`,3934369135.9495783`}},
+ExpressionUUID -> "c869eaaf-40c7-4241-add9-37d750a821ef"],Cell[
+"\<	\:0e2b\:0e25\:0e31\:0e07\:0e08\:0e32\:0e01\:0e17\:0e35\:0e48\:0e2d\:0e32\:0e08\:0e32\:0e23\:0e22\:0e4c\:0e17\:0e27\:0e35\:0e0a\:0e31\:0e22\:0e44\:0e14\:0e49\:0e23\:0e31\:0e1a\:0e02\:0e49\:0e2d\:0e21\:0e39\:0e25\:0e21\:0e32\:0e41\:0e25\:0e49\:0e27 \:0e08\:0e36\:0e07\:0e2d\:0e22\:0e32\:0e01\:0e17\:0e23\:0e32\:0e1a\:0e27\:0e48\:0e32\:0e01\:0e25\:0e44\:0e01\:0e01\:0e32\:0e23\:0e17\:0e33\:0e07\:0e32\:0e19\:0e40\:0e1b\:0e47\:0e19\:0e2d\:0e22\:0e48\:0e32\:0e07\:0e44\:0e23 \:0e1e\:0e1a\:0e27\:0e48\:0e32\:0e40\:0e21\:0e37\:0e48\:0e2d\:0e14\:0e39\:0e08\:0e32\:0e01\:0e37\:0e1a\:0e04\:0e49\:0e19\:0e14\:0e39\:0e41\:0e25\:0e49\:0e27 \:0e1e\:0e1a\:0e27\:0e48\:0e32\:0e21\:0e35\:0e01\:0e32\:0e23\:0e40\:0e23\:0e35\:0e22\:0e01\:0e43\:0e0a\:0e49\:0e04\:0e33\:0e2a\:0e31\:0e48\:0e07 Bayesian spam filter \:0e14\:0e31\:0e07\:0e19\:0e31\:0e49\:0e19\:0e2d\:0e32\:0e08\:0e32\:0e23\:0e22\:0e4c\:0e17\:0e27\:0e35\:0e0a\:0e31\:0e22\:0e08\:0e36\:0e07\:0e44\:0e14\:0e49\:0e44\:0e1b\:0e40\:0e1b\:0e34\:0e14 lecture \:0e40\:0e23\:0e37\:0e48\:0e2d\:0e07 Discrete Probability \:0e43\:0e19\:0e27\:0e34\:0e0a\:0e32 CPE 111 \:0e41\:0e25\:0e30\:0e40\:0e23\:0e34\:0e48\:0e21\:0e25\:0e07\:0e21\:0e37\:0e2d\:0e40\:0e02\:0e35\:0e22\:0e19\:0e42\:0e1b\:0e23\:0e41\:0e01\:0e23\:0e21\:0e40\:0e1e\:0e37\:0e48\:0e2d\:0e25\:0e2d\:0e01\:0e40\:0e25\:0e35\:0e22\:0e19\:0e41\:0e1a\:0e1a Bayesian spam filter \:0e17\:0e35\:0e48 LEB3 \:0e43\:0e0a\:0e49\:0e07\:0e32\:0e19\:0e2d\:0e22\:0e39\:0e48 \:0e41\:0e15\:0e48\:0e40\:0e19\:0e37\:0e48\:0e2d\:0e07\:0e08\:0e32\:0e01\:0e27\:0e31\:0e19\:0e19\:0e31\:0e49\:0e19\:0e2d\:0e32\:0e08\:0e32\:0e23\:0e22\:0e4c\:0e17\:0e27\:0e35\:0e0a\:0e31\:0e22\:0e21\:0e35\:0e2a\:0e2d\:0e19\:0e20\:0e32\:0e04\:0e04\:0e48\:0e33 \:0e17\:0e33\:0e43\:0e2b\:0e49\:0e40\:0e2b\:0e19\:0e37\:0e48\:0e2d\:0e22\:0e25\:0e49\:0e32\:0e40\:0e1b\:0e47\:0e19\:0e2d\:0e22\:0e48\:0e32\:0e07\:0e21\:0e32\:0e01 \:0e42\:0e1b\:0e23\:0e41\:0e01\:0e23\:0e21\:0e17\:0e35\:0e48\:0e44\:0e14\:0e49\:0e08\:0e36\:0e07\:0e40\:0e1b\:0e47\:0e19\:0e41\:0e04\:0e48\:0e01\:0e32\:0e23\:0e2b\:0e32\:0e04\:0e27\:0e32\:0e21\:0e19\:0e48\:0e32\:0e08\:0e30\:0e40\:0e1b\:0e47\:0e19\:0e40\:0e17\:0e48\:0e32\:0e19\:0e31\:0e49\:0e19 \:0e41\:0e25\:0e30\:0e2d\:0e32\:0e08\:0e32\:0e23\:0e22\:0e4c\:0e01\:0e47\:0e40\:0e1c\:0e25\:0e2d\:0e2b\:0e25\:0e31\:0e1a\:0e44\:0e1b\>",
+"Text",CellChangeTimes -> {{3934356897.403459`,3934356933.157785`},{3934356963.4855022`,3934357119.913475`},{3934357150.354219`,3934357255.7892494`},{3934364237.129346`,3934364240.443788`},{3934366908.1878767`,3934366908.991272`},{3934368874.7957373`,3934368912.0061097`}},
+ExpressionUUID -> "4675e953-3c8e-4cc1-af4d-55d71dea4e0b"],Cell[
+BoxData[RowBox[{RowBox[
+{"tokenizedData"," ","="," ",RowBox[{RowBox[{RowBox[{"{",RowBox[{RowBox[{"#","[",RowBox[
+{"[","1","]"}],"]"}],","," ",RowBox[{"ToLowerCase"," ","/@"," ",RowBox[{"StringSplit","[",RowBox[
+{RowBox[{"#","[",RowBox[{"[","2","]"}],"]"}],","," ","\" \""}],"]"}]}]}],"}"}]," ","&"}]," ","/@"," ","data"}]}],";"}]],
+"Code",CellChangeTimes -> {3934356468.465995`,{3934365004.76331`,3934365011.6480846`}},
+CellLabel -> "In[2]:= ",ExpressionUUID -> "d3c9cdfd-b1ce-4a2d-bbd8-740ad11594e0"],Cell[
+CellGroupData[
+{Cell[
+BoxData[{RowBox[{RowBox[{"(*",RowBox[{"in"," ",RowBox[{"python"," ","[",RowBox[
+{RowBox[{RowBox[{"item","[","1","]"}]," ","for"," ","item"," ","in"," ","tokenized_data"," ","if"," ",RowBox[
+{"item","[","0","]"}]}]," ","=="," ","\"Spam\""}],"]"}]}],"*)"}],"\n",RowBox[{RowBox[
+{"spamMessages"," ","="," ",RowBox[{RowBox[{"Select","[",RowBox[{"tokenizedData",","," ",RowBox[
+{RowBox[{RowBox[{"#","[",RowBox[{"[","1","]"}],"]"}]," ","=="," ","\"Spam\""}]," ","&"}]}],"]"}],"[",RowBox[
+{"[",RowBox[{"All",","," ","2"}],"]"}],"]"}]}],";"}]}],"\n",RowBox[{RowBox[{"hamMessages"," ","="," ",RowBox[
+{RowBox[{"Select","[",RowBox[{"tokenizedData",","," ",RowBox[{RowBox[{RowBox[{"#","[",RowBox[
+{"[","1","]"}],"]"}]," ","=="," ","\"Ham\""}]," ","&"}]}],"]"}],"[",RowBox[{"[",RowBox[
+{"All",","," ","2"}],"]"}],"]"}]}],";"}],RowBox[{"\n","\n"}],RowBox[{RowBox[{"spamWords"," ","="," ",RowBox[
+{"Flatten","[","spamMessages","]"}]}],";"}],"\n",RowBox[{RowBox[{"hamWords"," ","="," ",RowBox[
+{"Flatten","[","hamMessages","]"}]}],";"}],RowBox[{"\n","\n"}],RowBox[{RowBox[{"totalSpamWords"," ","="," ",RowBox[
+{"Length","[","spamWords","]"}]}],";"}],"\n",RowBox[{RowBox[{"totalHamWords"," ","="," ",RowBox[
+{"Length","[","hamWords","]"}]}],";"}],RowBox[{"\n","\n"}],RowBox[{RowBox[{"(*",RowBox[
+{"cout"," ","the"," ","repeated"," ","words"}],"*)"}],"\n",RowBox[{RowBox[{"spamWordCounts"," ","="," ",RowBox[
+{"Tally","[","spamWords","]"}]}],";"}]}],"\n",RowBox[{RowBox[{"hamWordCounts"," ","="," ",RowBox[
+{"Tally","[","hamWords","]"}]}],";"}],RowBox[{"\n","\n"}],RowBox[{RowBox[{"(*","dictionary","*)"}],"\n",RowBox[
+{"spamWordProb"," ","="," ",RowBox[{"Association","[",RowBox[{"spamWordCounts"," ","/."," ",RowBox[
+{RowBox[{"{",RowBox[{"w_",","," ","c_"}],"}"}]," ","\[RuleDelayed]"," ",RowBox[{"w"," ","\[Rule]"," ",RowBox[
+{RowBox[{"(",RowBox[{"c"," ","+"," ","1"}],")"}],"/",RowBox[{"(",RowBox[{"totalSpamWords"," ","+"," ",RowBox[
+{"Length","[",RowBox[{"Union","[",RowBox[{"spamWords",","," ","hamWords"}],"]"}],"]"}]}],")"}]}]}]}]}],"]"}]}]}],"\n",RowBox[
+{"hamWordProb"," ","="," ",RowBox[{"Association","[",RowBox[{"hamWordCounts"," ","/."," ",RowBox[
+{RowBox[{"{",RowBox[{"w_",","," ","c_"}],"}"}]," ","\[RuleDelayed]"," ",RowBox[{"w"," ","\[Rule]"," ",RowBox[
+{RowBox[{"(",RowBox[{"c"," ","+"," ","1"}],")"}],"/",RowBox[{"(",RowBox[{"totalHamWords"," ","+"," ",RowBox[
+{"Length","[",RowBox[{"Union","[",RowBox[{"spamWords",","," ","hamWords"}],"]"}],"]"}]}],")"}]}]}]}]}],"]"}]}]}],
+"Code",CellChangeTimes -> {{3934356479.891049`,3934356501.249082`},3934357566.7944427`},
+CellLabel -> "In[3]:= ",ExpressionUUID -> "e9dacd8b-8f0c-49d5-9faf-74d76524dc6d"],Cell[
+BoxData[
+RowBox[{"\[LeftAssociation]",RowBox[{RowBox[{"\"win\"","\[Rule]",FractionBox["3",
+"374"]}],",",RowBox[{"\"money\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"now\"","\[Rule]",FractionBox[
+"3","187"]}],",",RowBox[{"\"cheap\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"loans\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"available\"","\[Rule]",FractionBox[
+"3","374"]}],",",RowBox[{"\"exclusive\"","\[Rule]",FractionBox["3","374"]}],",",RowBox[
+{"\"offer\"","\[Rule]",FractionBox["5","374"]}],",",RowBox[{"\"just\"","\[Rule]",FractionBox[
+"3","374"]}],",",RowBox[{"\"for\"","\[Rule]",FractionBox["5","374"]}],",",RowBox[
+{"\"you\"","\[Rule]",FractionBox["4","187"]}],",",RowBox[{"\"congratulations\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"have\"","\[Rule]",FractionBox["3","374"]}],",",RowBox[
+{"\"won\"","\[Rule]",FractionBox["3","374"]}],",",RowBox[{"\"a\"","\[Rule]",FractionBox[
+"5","374"]}],",",RowBox[{"\"prize\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"free\"","\[Rule]",FractionBox["9","374"]}],",",RowBox[{"\"vacation\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"package\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"act\"","\[Rule]",FractionBox["2","187"]}],",",RowBox[{"\"limited\"","\[Rule]",FractionBox[
+"3","374"]}],",",RowBox[{"\"time\"","\[Rule]",FractionBox["3","374"]}],",",RowBox[
+{"\"earn\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"cash\"","\[Rule]",FractionBox[
+"3","374"]}],",",RowBox[{"\"quickly\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"and\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"easily\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"lowest\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"prices\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"on\"","\[Rule]",FractionBox[
+"5","374"]}],",",RowBox[{"\"meds\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"urgent\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"verify\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"your\"","\[Rule]",FractionBox["13","374"]}],",",RowBox[
+{"\"account\"","\[Rule]",FractionBox["3","374"]}],",",RowBox[{"\"information\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"claim\"","\[Rule]",FractionBox["3","374"]}],",",RowBox[
+{"\"gift\"","\[Rule]",FractionBox["3","374"]}],",",RowBox[{"\"card\"","\[Rule]",FractionBox[
+"3","374"]}],",",RowBox[{"\"been\"","\[Rule]",FractionBox["3","374"]}],",",RowBox[
+{"\"pre\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"approved\"","\[Rule]",FractionBox[
+"3","374"]}],",",RowBox[{"\"credit\"","\[Rule]",FractionBox["3","374"]}],",",RowBox[
+{"\"get\"","\[Rule]",FractionBox["2","187"]}],",",RowBox[{"\"rich\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"with\"","\[Rule]",FractionBox["2","187"]}],",",RowBox[
+{"\"this\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"simple\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"trick\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"brand\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"new\"","\[Rule]",FractionBox[
+"2","187"]}],",",RowBox[{"\"car\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"today\"","\[Rule]",FractionBox["2","187"]}],",",RowBox[{"\"stock\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"tips\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"unlock\"","\[Rule]",FractionBox["2","187"]}],",",RowBox[{"\"potential\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"our\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"course\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"fast\"","\[Rule]",FractionBox[
+"3","374"]}],",",RowBox[{"\"has\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"compromised\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"double\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"income\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"in\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"days\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"guaranteed\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"weight\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"loss\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"season\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"sale\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"up\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"to\"","\[Rule]",FractionBox["2","187"]}],",",RowBox[{"\"ninety\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"percent\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"off\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"paid\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"working\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"from\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"home\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"investment\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"secrets\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"they\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"dont\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"want\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"know\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"phone\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"reduce\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"debt\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"trial\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"save\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"big\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"insurance\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"premiums\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"loan\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"is\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"special\"","\[Rule]",FractionBox[
+"2","187"]}],",",RowBox[{"\"discount\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"reward\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"increase\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"score\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"purchase\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"best\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"deals\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"the\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"market\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"savings\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"waiting\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"instant\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"rewards\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"consultation\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"benefits\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"start\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"earning\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"receive\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"bonus\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[
+{"\"delivery\"","\[Rule]",FractionBox["1","187"]}],",",RowBox[{"\"all\"","\[Rule]",FractionBox[
+"1","187"]}],",",RowBox[{"\"orders\"","\[Rule]",FractionBox["1","187"]}]}],"\[RightAssociation]"}],
+StandardForm],"Output",CellLabel -> "Out[11]= ",ExpressionUUID -> "ebaee26d-47ab-4ba6-bcab-60097af5ae32"],Cell[
+BoxData[
+RowBox[{"\[LeftAssociation]",RowBox[{RowBox[{"\"how\"","\[Rule]",FractionBox["2",
+"321"]}],",",RowBox[{"\"are\"","\[Rule]",FractionBox["1","107"]}],",",RowBox[{"\"you\"","\[Rule]",FractionBox[
+"4","107"]}],",",RowBox[{"\"doing\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"today\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"meeting\"","\[Rule]",FractionBox[
+"4","321"]}],",",RowBox[{"\"at\"","\[Rule]",FractionBox["2","107"]}],",",RowBox[{"\"noon\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"lunch\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"tomorrow\"","\[Rule]",FractionBox["1","107"]}],",",RowBox[{"\"can\"","\[Rule]",FractionBox[
+"2","107"]}],",",RowBox[{"\"we\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"reschedule\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"our\"","\[Rule]",FractionBox["4","321"]}],",",RowBox[
+{"\"call\"","\[Rule]",FractionBox["4","321"]}],",",RowBox[{"\"dont\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"forget\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"to\"","\[Rule]",FractionBox["4","321"]}],",",RowBox[{"\"bring\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"the\"","\[Rule]",FractionBox["4","107"]}],",",RowBox[
+{"\"documents\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"dinner\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"my\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"place\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"this\"","\[Rule]",FractionBox["4","321"]}],",",RowBox[
+{"\"weekend\"","\[Rule]",FractionBox["1","107"]}],",",RowBox[{"\"heres\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"report\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"requested\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"lets\"","\[Rule]",FractionBox[
+"1","107"]}],",",RowBox[{"\"catch\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"up\"","\[Rule]",FractionBox["1","107"]}],",",RowBox[{"\"soon\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"happy\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"birthday\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"have\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"a\"","\[Rule]",FractionBox["4","321"]}],",",RowBox[{"\"great\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"day\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"send\"","\[Rule]",FractionBox["4","321"]}],",",RowBox[{"\"me\"","\[Rule]",FractionBox[
+"4","321"]}],",",RowBox[{"\"file\"","\[Rule]",FractionBox["1","107"]}],",",RowBox[
+{"\"looking\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"forward\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"please\"","\[Rule]",FractionBox["1","107"]}],",",RowBox[
+{"\"review\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"attached\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"document\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"thank\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"for\"","\[Rule]",FractionBox[
+"4","321"]}],",",RowBox[{"\"your\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"help\"","\[Rule]",FractionBox["1","107"]}],",",RowBox[{"\"yesterday\"","\[Rule]",FractionBox[
+"1","107"]}],",",RowBox[{"\"available\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"quick\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"see\"","\[Rule]",FractionBox[
+"4","321"]}],",",RowBox[{"\"game\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"tonight\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"with\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"task\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"what\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"time\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"is\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"flight\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"minutes\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"from\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"office\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"go\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"walk\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"evening\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"join\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"later\"","\[Rule]",FractionBox[
+"1","107"]}],",",RowBox[{"\"remember\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"invoice\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"plans\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"still\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"on\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"updated\"","\[Rule]",FractionBox[
+"2","321"]}],",",RowBox[{"\"pick\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[
+{"\"groceries\"","\[Rule]",FractionBox["2","321"]}],",",RowBox[{"\"gym\"","\[Rule]",FractionBox[
+"2","321"]}]}],"\[RightAssociation]"}],StandardForm],"Output",CellLabel -> "Out[12]= ",
+ExpressionUUID -> "3dd258a9-5ded-4060-abd1-89a335337032"]},Open],ExpressionUUID -> "7a16b9a7-bd01-4b45-a49e-b3afe1cc4ff8"],Cell[
+
+"\<\:0e40\:0e0a\:0e49\:0e32\:0e27\:0e31\:0e19\:0e17\:0e35\:0e48 4 \:0e01\:0e31\:0e19\:0e22\:0e32\:0e22\:0e19 \:0e40\:0e21\:0e37\:0e48\:0e2d\:0e2d\:0e32\:0e08\:0e32\:0e23\:0e22\:0e4c\:0e15\:0e37\:0e48\:0e19\:0e02\:0e36\:0e49\:0e19\:0e21\:0e32\:0e01\:0e47\:0e1e\:0e1a\:0e27\:0e48\:0e32\:0e42\:0e1b\:0e23\:0e41\:0e01\:0e23\:0e21\:0e02\:0e32\:0e14\:0e2b\:0e32\:0e22\:0e44\:0e1b\:0e1a\:0e32\:0e07\:0e2a\:0e48\:0e27\:0e19\:0e08\:0e32\:0e01\:0e01\:0e32\:0e23\:0e17\:0e35\:0e48\:0e2d\:0e32\:0e08\:0e32\:0e23\:0e22\:0e4c\:0e19\:0e2d\:0e19\:0e1f\:0e38\:0e1a\:0e2b\:0e19\:0e49\:0e32\:0e04\:0e2d\:0e21\:0e1e\:0e34\:0e27\:0e40\:0e15\:0e2d\:0e23\:0e4c \:0e08\:0e36\:0e07\:0e04\:0e34\:0e14\:0e27\:0e48\:0e32\:0e19\:0e31\:0e01\:0e28\:0e36\:0e01\:0e29\:0e32\:0e43\:0e19\:0e27\:0e34\:0e0a\:0e32 Discrete \:0e04\:0e07\:0e08\:0e30\:0e0a\:0e48\:0e27\:0e22\:0e41\:0e01\:0e49\:0e44\:0e14\:0e49 \:0e40\:0e19\:0e37\:0e48\:0e2d\:0e07\:0e08\:0e32\:0e01\:0e19\:0e31\:0e01\:0e28\:0e36\:0e01\:0e29\:0e32\:0e43\:0e19\:0e27\:0e34\:0e0a\:0e32\:0e19\:0e35\:0e49\:0e17\:0e33 quiz \:0e44\:0e14\:0e49\:0e04\:0e30\:0e41\:0e19\:0e19\:0e14\:0e35\:0e01\:0e31\:0e19\:0e40\:0e01\:0e37\:0e2d\:0e1a\:0e17\:0e38\:0e01\:0e04\:0e19\>",
+"Text",CellChangeTimes -> {3934366917.5379553`},ExpressionUUID -> "42293783-9eed-4604-bfcf-86de7e856e6a"],Cell[
+CellGroupData[
+{Cell[
+BoxData[{RowBox[{"(*",RowBox[{"P",RowBox[{"(","S",")"}]}],"*)"}],"\n",RowBox[
+{"probSpam"," ","="," ",RowBox[{RowBox[{"Length","[","spamMessages","]"}]," ","/"," ",RowBox[
+{"Length","[","data","]"}]}]}],"\n",RowBox[{RowBox[{"(*",RowBox[{"P",RowBox[{"(",RowBox[
+{"\[Not]","S"}],")"}]}],"*)"}],"\n",RowBox[{"probHam"," ","="," ",RowBox[{RowBox[
+{"Length","[","hamMessages","]"}]," ","/"," ",RowBox[{"Length","[","data","]"}]}]}]}]}],
+"Code",CellChangeTimes -> {3934258002.0806627`,3934284347.3827047`,{3934284417.623958`,3934284431.44876`},{3934355102.8692017`,3934355114.3486023`},{3934355181.330912`,3934355221.9423323`},{3934355296.7906632`,3934355309.134515`},{3934355707.6767087`,3934355707.985656`},3934355907.734851`,{3934356074.20574`,3934356112.152885`},{3934356166.484536`,3934356265.847499`},{3934356330.086672`,3934356405.583736`},{3934356446.541469`,3934356447.929237`},{3934357380.925755`,3934357385.322392`}},
+CellLabel -> "In[13]:= ",ExpressionUUID -> "f0236f72-6aa2-44c6-ac85-0fc0b2907cc7"],Cell[
+BoxData[
+FractionBox["20","33"],StandardForm],"Output",CellLabel -> "Out[13]= ",ExpressionUUID -> "9d80ae55-fb6c-4997-87df-23b588fad511"],Cell[
+BoxData[
+FractionBox["13","33"],StandardForm],"Output",CellLabel -> "Out[14]= ",ExpressionUUID -> "a0465676-10bc-450f-bd9d-4c4725aa2573"]},
+Open],ExpressionUUID -> "36292f7b-cde0-4cb3-8b1c-3f3641eff876"],Cell[
+BoxData[RowBox[
+{RowBox[{RowBox[{"BayesSpamProbability","[","newMessage_","]"}]," ",":="," ",RowBox[
+{"Module","[","\n","  ",RowBox[{RowBox[{"{",RowBox[{"words",","," ","spamProbabilityProduct",","," ","hamProbabilityProduct",","," ","defaultSpamProb",","," ","defaultHamProb"}],"}"}],",","\n","  ","\n","  ",RowBox[
+{RowBox[{"words"," ","="," ",RowBox[{"ToLowerCase"," ","/@"," ",RowBox[{"StringSplit","[",RowBox[
+{"newMessage",","," ","\" \""}],"]"}]}]}],";","\n","  ","\n","  ",RowBox[{"(*",RowBox[
+{"P",RowBox[{"(",RowBox[{"w"," ","|"," ","S"}],")"}]}],"*)"}],"\n","  ",RowBox[{"defaultSpamProb"," ","="," ",RowBox[
+{"1"," ","/"," ",RowBox[{"(",RowBox[{"totalSpamWords"," ","+"," ",RowBox[{"Length","[",RowBox[
+{"Union","[",RowBox[{"spamWords",","," ","hamWords"}],"]"}],"]"}]}],")"}]}]}],";","\n","  ","\n","  ",RowBox[
+{"(*"," ",RowBox[{"P",RowBox[{"(",RowBox[{"w"," ","|"," ",RowBox[{"\[Not]","S"}]}],")"}]}],"*)"}],"\n","  ",RowBox[
+{"defaultHamProb"," ","="," ",RowBox[{"1"," ","/"," ",RowBox[{"(",RowBox[{"totalHamWords"," ","+"," ",RowBox[
+{"Length","[",RowBox[{"Union","[",RowBox[{"spamWords",","," ","hamWords"}],"]"}],"]"}]}],")"}]}]}],";","\n","\n","  ",RowBox[
+{"(*",RowBox[{"\[CapitalPi]"," ","P",RowBox[{"(",RowBox[{"w"," ","|"," ","S"}],")"}]," ","for"," ","each"," ","word"," ","w"," ","in"," ","E"}],"*)"}],"\n","  ",RowBox[
+{"(*",RowBox[{"P",RowBox[{"(",RowBox[{"E"," ","|"," ","S"}],")"}]}],"*)"}],"\n","  ",RowBox[
+{"spamProbabilityProduct"," ","="," ","1"}],";","\n","  ",RowBox[{"Do","[","\n","    ",RowBox[
+{RowBox[{"spamProbabilityProduct"," ","*="," ",RowBox[{"If","[","\n","      ",RowBox[
+{RowBox[{"KeyExistsQ","[",RowBox[{"spamWordProb",","," ","word"}],"]"}],","," ","\n","      ",RowBox[
+{"spamWordProb","[","word","]"}],","," ","\n","      ","defaultSpamProb"}],"\n","    ","]"}]}],",","\n","    ",RowBox[
+{"{",RowBox[{"word",","," ","words"}],"}"}]}],"\n","  ","]"}],";","\n","  ","\n","  ",RowBox[
+{"(*",RowBox[{"\[CapitalPi]"," ","P",RowBox[{"(",RowBox[{"w"," ","|"," ",RowBox[{"\[Not]","S"}]}],")"}]," ","for"," ","each"," ","word"," ","w"," ","in"," ","E"}],"*)"}],"\n","  ",RowBox[
+{"(*",RowBox[{"P",RowBox[{"(",RowBox[{"E"," ","|"," ",RowBox[{"\[Not]","S"}]}],")"}]}],"*)"}],"\n","  ",RowBox[
+{"hamProbabilityProduct"," ","="," ","1"}],";","\n","  ",RowBox[{"Do","[","\n","    ",RowBox[
+{RowBox[{"hamProbabilityProduct"," ","*="," ",RowBox[{"If","[","\n","      ",RowBox[
+{RowBox[{"KeyExistsQ","[",RowBox[{"hamWordProb",","," ","word"}],"]"}],","," ","\n","      ",RowBox[
+{"hamWordProb","[","word","]"}],","," ","\n","      ","defaultHamProb"}],"\n","    ","]"}]}],",","\n","    ",RowBox[
+{"{",RowBox[{"word",","," ","words"}],"}"}]}],"\n","  ","]"}],";","\n","  ","\n","  ",RowBox[
+{"(*"," ",RowBox[{RowBox[{"P",RowBox[{"(",RowBox[{"S"," ","|"," ","E"}],")"}]}]," ","="," ",RowBox[
+{RowBox[{"(",RowBox[{"P",RowBox[{"(",RowBox[{"E"," ","|"," ","S"}],")"}]," ","\[Times]"," ","P",RowBox[
+{"(","S",")"}]}],")"}]," ","/"," ",RowBox[{"(",RowBox[{RowBox[{"P",RowBox[{"(",RowBox[
+{"E"," ","|"," ","S"}],")"}]," ","\[Times]"," ","P",RowBox[{"(","S",")"}]}]," ","+"," ",RowBox[
+{"P",RowBox[{"(",RowBox[{"E"," ","|"," ",RowBox[{"\[Not]","S"}]}],")"}]," ","\[Times]"," ","P",RowBox[
+{"(",RowBox[{"\[Not]","S"}],")"}]}]}],")"}]}]}]," ","*)"}],"\n","\[NonBreakingSpace]\[NonBreakingSpace]","\n","  ",RowBox[
+{"Return","[","\n","  ",RowBox[{RowBox[{"(",RowBox[{"spamProbabilityProduct"," ","*"," ","probSpam"}],")"}]," ","/"," ",RowBox[
+{"(",RowBox[{RowBox[{"spamProbabilityProduct"," ","*"," ","probSpam"}]," ","+"," ",RowBox[
+{"hamProbabilityProduct"," ","*"," ","probHam"}]}],")"}]}],"\n","\[NonBreakingSpace]\[NonBreakingSpace]","]"}],";"}]}],"\n","]"}]}],";"}]],
+"Code",CellChangeTimes -> {3934356452.079978`,{3934357520.1865983`,3934357558.2400174`},{3934364145.0290003`,3934364181.2904487`}},
+CellLabel -> "In[15]:= ",ExpressionUUID -> "00d7b195-88ef-4612-91ec-75aad3afe6fa"],Cell[
+CellGroupData[
+{Cell[
+BoxData[RowBox[{"N","[",RowBox[{"BayesSpamProbability","[","\"Can you give free money?\"","]"}],"]"}]],
+"Code",CellChangeTimes -> {3934355228.7977166`,3934355760.8994184`,3934364662.8628073`,3934365715.7228193`,3934365913.7834473`,{3934366361.340601`,3934366363.613522`},3934368938.500691`},
+CellLabel -> "In[49]:= ",ExpressionUUID -> "744da0c8-cd8f-475e-b9ad-815a210cf85b"],Cell[
+BoxData[
+"0.4174402207400802`",StandardForm],"Output",CellLabel -> "Out[49]= ",ExpressionUUID -> "621cf5b3-6daa-4c61-9cd5-046e3e8bed4f"]},
+Open],ExpressionUUID -> "e85517fe-2a38-494f-b421-df12a95ceb80"]},Open],ExpressionUUID -> "93b6f41f-7fc1-4ae3-a954-9a7e0ecbf8b2"],Cell[
+CellGroupData[
+{Cell[
+"\<How good it be?\>","Section",CellChangeTimes -> {{3934367034.999628`,3934367058.536387`}},
+ExpressionUUID -> "a4ecf5f7-9446-496d-b814-84a53efc9a8d"],Cell[
+TextData[{"\:0e2b\:0e25\:0e31\:0e07\:0e08\:0e32\:0e01\:0e17\:0e35\:0e48\:0e2d\:0e32\:0e08\:0e32\:0e23\:0e22\:0e4c\:0e17\:0e27\:0e35\:0e0a\:0e31\:0e22\:0e44\:0e14\:0e49\:0e21\:0e2d\:0e1a\:0e2b\:0e21\:0e32\:0e22\:0e43\:0e2b\:0e49\:0e19\:0e31\:0e01\:0e28\:0e36\:0e01\:0e29\:0e32\:0e40\:0e15\:0e34\:0e21 code \:0e43\:0e19\:0e2a\:0e48\:0e27\:0e19\:0e17\:0e35\:0e48\:0e02\:0e32\:0e14\:0e2b\:0e32\:0e22\:0e44\:0e1b\:0e41\:0e25\:0e49\:0e27 \:0e08\:0e36\:0e07\:0e1e\:0e1a\:0e27\:0e48\:0e32 \:0e2a\:0e48\:0e27\:0e19\:0e17\:0e35\:0e48\:0e22\:0e31\:0e07\:0e44\:0e21\:0e48\:0e40\:0e2a\:0e23\:0e47\:0e08 \:0e04\:0e37\:0e2d\:0e01\:0e32\:0e23\:0e2b\:0e32\:0e04\:0e48\:0e32 threshold (\[Alpha]) \:0e17\:0e35\:0e48\:0e40\:0e1b\:0e47\:0e19\:0e44\:0e1b\:0e44\:0e14\:0e49\:0e17\:0e31\:0e49\:0e07\:0e2b\:0e21\:0e14\:0e02\:0e2d\:0e07\:0e42\:0e1b\:0e23\:0e41\:0e01\:0e23\:0e21\:0e19\:0e35\:0e49 \:0e40\:0e1e\:0e37\:0e48\:0e2d\:0e43\:0e2b\:0e49\:0e44\:0e14\:0e49\:0e1c\:0e25\:0e25\:0e31\:0e1e\:0e18\:0e4c\:0e43\:0e01\:0e25\:0e49\:0e40\:0e04\:0e35\:0e22\:0e07\:0e01\:0e31\:0e1a data \:0e17\:0e35\:0e48\:0e44\:0e14\:0e49\:0e23\:0e31\:0e1a\:0e21\:0e32 \:0e40\:0e0a\:0e48\:0e19 \[OpenCurlyDoubleQuote]Win money now\[CloseCurlyDoubleQuote] \:0e44\:0e14\:0e49\:0e04\:0e27\:0e32\:0e21\:0e19\:0e48\:0e32\:0e08\:0e30\:0e40\:0e1b\:0e47\:0e19\:0e04\:0e37\:0e2d 0.948971 \:0e0b\:0e36\:0e48\:0e07\:0e01\:0e23\:0e13\:0e35\:0e2a\:0e21\:0e21\:0e15\:0e34 \[Alpha] = 0.95 \:0e19\:0e31\:0e48\:0e19\:0e2b\:0e21\:0e32\:0e22\:0e04\:0e27\:0e32\:0e21\:0e27\:0e48\:0e32\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21\:0e19\:0e35\:0e49\:0e44\:0e21\:0e48\:0e40\:0e1b\:0e47\:0e19 spam \:0e14\:0e31\:0e07\:0e19\:0e31\:0e49\:0e19\:0e2a\:0e34\:0e48\:0e07\:0e17\:0e35\:0e48\:0e19\:0e31\:0e01\:0e28\:0e36\:0e01\:0e29\:0e32\:0e15\:0e49\:0e2d\:0e07\:0e17\:0e33 \:0e04\:0e37\:0e2d\:0e01\:0e32\:0e23\:0e2b\:0e32\:0e04\:0e48\:0e32 threshold \:0e17\:0e35\:0e48\:0e40\:0e2b\:0e21\:0e32\:0e30\:0e2a\:0e21\:0e40\:0e1e\:0e37\:0e48\:0e2d\:0e43\:0e2b\:0e49\:0e44\:0e14\:0e49\:0e01\:0e32\:0e23\:0e17\:0e33\:0e19\:0e32\:0e22\:0e17\:0e35\:0e48\:0e21\:0e35\:0e1b\:0e23\:0e30\:0e2a\:0e34\:0e17\:0e18\:0e34\:0e20\:0e32\:0e1e\:0e2a\:0e39\:0e07\:0e2a\:0e38\:0e14\:0e42\:0e14\:0e22\:0e17\:0e14\:0e2a\:0e2d\:0e1a\:0e08\:0e32\:0e01 input data \:0e17\:0e35\:0e48\:0e1b\:0e23\:0e30\:0e01\:0e32\:0e28\:0e43\:0e19\:0e0a\:0e37\:0e48\:0e2d\:0e15\:0e31\:0e27\:0e41\:0e1b\:0e23 \[OpenCurlyDoubleQuote]data\[CloseCurlyDoubleQuote] \:0e0b\:0e36\:0e48\:0e07\:0e01\:0e32\:0e23\:0e2b\:0e32\:0e1b\:0e23\:0e30\:0e2a\:0e34\:0e17\:0e18\:0e34\:0e20\:0e32\:0e1e\:0e19\:0e31\:0e49\:0e19\:0e2b\:0e32\:0e44\:0e14\:0e49\:0e08\:0e32\:0e01 \:0e2d\:0e31\:0e15\:0e23\:0e32\:0e01\:0e32\:0e23\:0e17\:0e33\:0e19\:0e32\:0e22\:0e16\:0e39\:0e01\:0e15\:0e49\:0e2d\:0e07 = ",Cell[
+BoxData[
+FormBox[FractionBox["\:0e08\:0e33\:0e19\:0e27\:0e19\:0e04\:0e23\:0e31\:0e49\:0e07\:0e17\:0e35\:0e48\:0e17\:0e33\:0e19\:0e32\:0e22\:0e16\:0e39\:0e01\:0e15\:0e49\:0e2d\:0e07",
+"\:0e08\:0e33\:0e19\:0e27\:0e19\:0e04\:0e23\:0e31\:0e49\:0e07\:0e17\:0e35\:0e48\:0e43\:0e0a\:0e49\:0e17\:0e33\:0e19\:0e32\:0e22\:0e17\:0e31\:0e49\:0e07\:0e2b\:0e21\:0e14"],
+TraditionalForm]],FormatType -> TraditionalForm,ExpressionUUID -> "54e81e39-3e5b-49e6-9ff5-a803afba3abe"]," \:0e42\:0e14\:0e22\:0e2b\:0e32\:0e44\:0e14\:0e49\:0e08\:0e32\:0e01\:0e15\:0e31\:0e27\:0e2d\:0e22\:0e48\:0e32\:0e07 Function \:0e14\:0e49\:0e32\:0e19\:0e25\:0e48\:0e32\:0e07"}],
+"Text",CellChangeTimes -> {{3934364277.8099113`,3934364369.6278057`},{3934364543.0119877`,3934364545.818892`},{3934364632.250184`,3934364815.491325`},{3934364856.3512163`,3934364891.1211944`},{3934365952.1999273`,3934366033.960425`},{3934366108.852365`,3934366125.9531817`},{3934366165.065134`,3934366282.663394`}},
+ExpressionUUID -> "9e1fed18-ce65-4005-86c2-3ce8bbeb9981"],Cell[
+BoxData[RowBox[{RowBox[
+{"CheckAnswer","[",RowBox[{"data_",","," ","\[Alpha]_"}],"]"}]," ",":="," ",RowBox[
+{"Module","[","\n","\t",RowBox[{RowBox[{"{",RowBox[{"i",","," ",RowBox[{"count"," ","="," ","0"}],","," ","result"}],"}"}],",","\n","\t","\n","\t",RowBox[
+{RowBox[{"For","[",RowBox[{RowBox[{"i"," ","="," ","1"}],","," ",RowBox[{"i"," ","<="," ",RowBox[
+{"Length","[","data","]"}]}],","," ",RowBox[{"i","++"}],",","\n","\t\t",RowBox[{RowBox[
+{"If","[",RowBox[{RowBox[{RowBox[{"BayesSpamProbability","[",RowBox[{"data","[",RowBox[
+{"[",RowBox[{"i",","," ","2"}],"]"}],"]"}],"]"}]," ","<"," ","\[Alpha]"}],",","\n","\t\t\t",RowBox[
+{"result"," ","="," ","\"Ham\""}],",","\n","\t\t\t",RowBox[{"result"," ","="," ","\"Spam\""}]}],"\n","\t\t","]"}],";","\n","\t\t",RowBox[
+{"If","[",RowBox[{RowBox[{"result"," ","=="," ",RowBox[{"data","[",RowBox[{"[",RowBox[
+{"i",","," ","1"}],"]"}],"]"}]}],","," ",RowBox[{"count"," ","+="," ","1"}]}],"]"}],";"}]}],"\n","\t","]"}],";","\n","\t","\n","\t",RowBox[
+{"Return","[",RowBox[{"count","/",RowBox[{"Length","[","data","]"}]}],"]"}],";"}]}],"\n","]"}]}]],
+"Code",CellChangeTimes -> {{3934365121.479467`,3934365126.745957`},{3934365182.85618`,3934365297.8338637`},{3934365337.46697`,3934365418.3169537`},{3934365456.6256037`,3934365573.417383`},{3934365616.2321787`,3934365616.335444`},{3934365744.2736397`,3934365764.701229`},{3934365887.778468`,3934365893.4494734`},{3934365935.4400177`,3934365937.7753153`}},
+CellLabel -> "In[17]:= ",ExpressionUUID -> "fe163547-1017-41a5-81c9-1428b27bb6b1"],Cell[
+CellGroupData[
+{Cell[
+BoxData[RowBox[{"N","[",RowBox[{"CheckAnswer","[",RowBox[{"data",","," ","0.7"}],"]"}],"]"}]],
+"Code",CellChangeTimes -> {{3934365580.112851`,3934365675.899644`},{3934365796.625164`,3934365796.716017`},{3934365832.000346`,3934365845.6479483`},{3934366286.899238`,3934366291.436923`},{3934366326.7489767`,3934366333.047986`}},
+CellLabel -> "In[34]:= ",ExpressionUUID -> "2dc2aa2d-cccd-42e7-a7f8-4dc238c99ee5"],Cell[
+BoxData[
+"1.`",StandardForm],"Output",CellLabel -> "Out[34]= ",ExpressionUUID -> "eb20b7bf-6d4a-4af9-9771-56ea0a38fa43"]},
+Open],ExpressionUUID -> "e0319a84-296d-463c-b9c8-1a4785cbc38a"],Cell[
+"\<\:0e04\:0e48\:0e32 Threshold \:0e17\:0e35\:0e48\:0e17\:0e33\:0e43\:0e2b\:0e49\:0e01\:0e32\:0e23\:0e17\:0e33\:0e19\:0e32\:0e22\:0e16\:0e39\:0e01\:0e15\:0e49\:0e2d\:0e07\:0e21\:0e32\:0e01\:0e17\:0e35\:0e48\:0e2a\:0e38\:0e14\:0e04\:0e37\:0e2d\:0e40\:0e17\:0e48\:0e32\:0e44\:0e23 \:0e41\:0e25\:0e30\:0e44\:0e14\:0e49\:0e1b\:0e23\:0e30\:0e2a\:0e34\:0e17\:0e18\:0e34\:0e20\:0e32\:0e1e\:0e40\:0e17\:0e48\:0e32\:0e44\:0e23 \:0e2b\:0e32\:0e44\:0e14\:0e49\:0e08\:0e32\:0e01\:0e01\:0e2d\:0e30\:0e44\:0e23 \:0e08\:0e07\:0e2d\:0e18\:0e34\:0e1a\:0e32\:0e22\>",
+"Text",CellChangeTimes -> {{3934366680.304121`,3934366714.654221`},{3934366755.9068217`,3934366765.485998`}},
+ExpressionUUID -> "314b27c3-a54e-426c-ae4f-79a86531afef"],Cell[
+TextData[{StyleBox[
+RowBox[{"\:0e08\:0e32\:0e01\:0e01\:0e32\:0e23\:0e2a\:0e38\:0e48\:0e21\:0e15\:0e31\:0e27\:0e40\:0e25\:0e02\:0e1e\:0e1a\:0e27\:0e48\:0e32"," ","\:0e04\:0e48\:0e32\:0e23\:0e30\:0e2b\:0e27\:0e48\:0e32\:0e07"," "}]],"0",".","16",StyleBox[
+RowBox[{" ","\:0e41\:0e25\:0e30"," "}]],"0",".","70",StyleBox[RowBox[{" ","\:0e2a\:0e32\:0e21\:0e32\:0e23\:0e16\:0e43\:0e0a\:0e49\:0e04\:0e33\:0e19\:0e27\:0e19\:0e1b\:0e23\:0e30\:0e2a\:0e34\:0e17\:0e18\:0e34\:0e20\:0e32\:0e1e\:0e44\:0e14\:0e49\:0e14\:0e35\:0e17\:0e35\:0e48\:0e2a\:0e38\:0e14"}]]}],
+"Text",Background -> RGBColor[1,0.9`,0.8`],ExpressionUUID -> "cd2ead27-8752-4a01-a7a2-b06fc5d811cb"]},
+Open],ExpressionUUID -> "e165a1fb-0c83-4b5c-89fa-cd88c6d22d22"],Cell[
+CellGroupData[
+{Cell[
+"\<Demonstration\>","Section",CellChangeTimes -> {{3934367170.978037`,3934367179.499917`},{3934367304.0026407`,3934367310.2963953`}},
+ExpressionUUID -> "b460e421-ec30-4178-851f-e48275ec29ca"],Cell[
+"\<\:0e40\:0e21\:0e37\:0e48\:0e2d\:0e40\:0e23\:0e32\:0e44\:0e14\:0e49 Bayesian spam filter \:0e41\:0e25\:0e49\:0e27 \:0e2d\:0e22\:0e32\:0e01\:0e08\:0e30\:0e17\:0e23\:0e32\:0e1a\:0e27\:0e48\:0e32 \:0e2b\:0e32\:0e01\:0e1a\:0e23\:0e34\:0e29\:0e31\:0e17 \:0e17\:0e27\:0e35\:0e0a\:0e31\:0e22\:0e04\:0e2d\:0e23\:0e4c\:0e1b\:0e2d\:0e40\:0e23\:0e0a\:0e31\:0e48\:0e19 \:0e0b\:0e36\:0e48\:0e07\:0e40\:0e1b\:0e47\:0e19\:0e1a\:0e23\:0e34\:0e29\:0e31\:0e17\:0e17\:0e35\:0e48\:0e17\:0e33\:0e40\:0e01\:0e35\:0e48\:0e22\:0e27\:0e01\:0e31\:0e1a\:0e40\:0e17\:0e04\:0e42\:0e19\:0e42\:0e25\:0e22\:0e35\:0e01\:0e32\:0e23\:0e2a\:0e37\:0e48\:0e2d\:0e2a\:0e32\:0e23 \:0e15\:0e49\:0e2d\:0e07\:0e01\:0e32\:0e23\:0e08\:0e30\:0e19\:0e33\:0e27\:0e34\:0e18\:0e35\:0e01\:0e32\:0e23\:0e08\:0e33\:0e41\:0e19\:0e01\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21\:0e42\:0e14\:0e22\:0e43\:0e0a\:0e49 Bayesian spam filter \:0e44\:0e1b\:0e43\:0e0a\:0e49 \:0e42\:0e14\:0e22\:0e21\:0e35\:0e0a\:0e38\:0e14\:0e17\:0e14\:0e2a\:0e2d\:0e1a\:0e40\:0e1b\:0e47\:0e19\:0e04\:0e33\:0e43\:0e14\:0e46 \:0e44\:0e14\:0e49\:0e41\:0e01\:0e48 \[OpenCurlyDoubleQuote]you\[CloseCurlyDoubleQuote], \[OpenCurlyDoubleQuote]win\[CloseCurlyDoubleQuote], \[OpenCurlyDoubleQuote]new\[CloseCurlyDoubleQuote] , \[OpenCurlyDoubleQuote]the\[CloseCurlyDoubleQuote] \:0e08\:0e32\:0e01\:0e19\:0e31\:0e49\:0e19\:0e2b\:0e32\:0e04\:0e27\:0e32\:0e21\:0e40\:0e1b\:0e47\:0e19\:0e44\:0e1b\:0e44\:0e14\:0e49\:0e27\:0e48\:0e32\:0e01\:0e32\:0e23\:0e17\:0e35\:0e48\:0e21\:0e35\:0e04\:0e33\:0e19\:0e31\:0e49\:0e19\:0e46 \:0e21\:0e35\:0e42\:0e2d\:0e01\:0e32\:0e2a\:0e40\:0e1b\:0e47\:0e19 spam \:0e2b\:0e23\:0e37\:0e2d\:0e44\:0e21\:0e48 \:0e42\:0e14\:0e22\:0e2d\:0e49\:0e32\:0e07\:0e2d\:0e34\:0e07\:0e08\:0e32\:0e01\:0e02\:0e49\:0e2d\:0e21\:0e39\:0e25\:0e17\:0e35\:0e48\:0e2d\:0e32\:0e08\:0e32\:0e23\:0e22\:0e4c\:0e17\:0e27\:0e35\:0e0a\:0e31\:0e22\:0e19\:0e33\:0e21\:0e32\:0e08\:0e32\:0e01 LEB3 \:0e42\:0e14\:0e22\:0e01\:0e33\:0e2b\:0e19\:0e14\:0e43\:0e2b\:0e49  \[Alpha] = 0.8\>",
+"Text",CellChangeTimes -> {{3934367221.860441`,3934367456.39569`},{3934367690.6632037`,3934367706.955309`},{3934367756.1256094`,3934367768.8195047`},{3934367849.38478`,3934367858.127079`},{3934368054.221034`,3934368060.736793`},{3934368430.540556`,3934368432.581419`},{3934368482.438344`,3934368504.3239417`}},
+ExpressionUUID -> "31bbcf2c-f28c-488d-84fa-a2a701e7dd69"],Cell[
+CellGroupData[{Cell[
+BoxData[
+{RowBox[{RowBox[{"(*",RowBox[{"example"," ","for"," ","the"," ","word"," ","\"you\""}],"*)"}],"\n",RowBox[
+{"spamYou"," ","="," ",RowBox[{"Replace","[",RowBox[{RowBox[{"spamWordProb","[","\"you\"","]"}],","," ",RowBox[
+{RowBox[{"Missing","[",RowBox[{"\"KeyAbsent\"",","," ","\"you\""}],"]"}]," ","\[Rule]"," ","0"}]}],"]"}]}]}],"\n",RowBox[
+{"hamYou"," ","="," ",RowBox[{"Replace","[",RowBox[{RowBox[{"hamWordProb","[","\"you\"","]"}],","," ",RowBox[
+{RowBox[{"Missing","[",RowBox[{"\"KeyAbsent\"",","," ","\"you\""}],"]"}]," ","\[Rule]"," ","0"}]}],"]"}]}],"\n",RowBox[
+{"probSpamYou"," ","="," ",RowBox[{"N","[",RowBox[{"spamYou","/",RowBox[{"(",RowBox[
+{"spamYou","+","hamYou"}],")"}]}],"]"}]}]}],"Code",CellChangeTimes -> {{3934367471.004017`,3934367477.6895213`},{3934367614.823772`,3934367684.142529`},{3934367729.140814`,3934367743.436219`},{3934367779.844296`,3934367788.372533`},{3934367873.7597723`,3934367885.759914`},{3934368000.93832`,3934368045.5881357`},{3934368510.986904`,3934368522.8341846`},{3934368566.991884`,3934368570.063498`}},
+CellLabel -> "In[31]:= ",ExpressionUUID -> "97f8d9e8-ca81-4785-9535-d322e1a3c634"],Cell[
+BoxData[
+FractionBox["4","187"],StandardForm],"Output",CellLabel -> "Out[31]= ",ExpressionUUID -> "b69375a9-866b-4729-a3a1-a73438307c28"],Cell[
+BoxData[
+FractionBox["4","107"],StandardForm],"Output",CellLabel -> "Out[32]= ",ExpressionUUID -> "2ad7a8ab-432f-4247-80d9-10a0dd0f077f"],Cell[
+BoxData[
+"0.36394557823129253`",StandardForm],"Output",CellLabel -> "Out[33]= ",ExpressionUUID -> "713f8a90-a4dd-4bc8-980a-0e96ccf4353d"]},
+Open],ExpressionUUID -> "0ca7c600-d503-47c8-81e5-bb8989f43a6d"],Cell[
+"\<\:0e40\:0e02\:0e35\:0e22\:0e19\:0e04\:0e33\:0e15\:0e2d\:0e1a\>",
+"Text",CellChangeTimes -> {{3934367795.5798707`,3934367815.3559723`},3934368530.6189113`},
+ExpressionUUID -> "602e4209-97de-4fb2-9e9a-4007deafacdd"],Cell[
+TextData[{StyleBox[
+RowBox[{"\:0e04\:0e27\:0e32\:0e21\:0e19\:0e48\:0e32\:0e08\:0e30\:0e40\:0e1b\:0e47\:0e19\:0e17\:0e35\:0e48\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21"," ","\""}]],"You",StyleBox[
+RowBox[{"\""," ","\:0e08\:0e30\:0e40\:0e1b\:0e47\:0e19\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21\:0e2a\:0e41\:0e1b\:0e21\:0e40\:0e17\:0e48\:0e32\:0e01\:0e31\:0e1a"," "}]],"0",".","363946",StyleBox[
+RowBox[{" ","\:0e0b\:0e36\:0e48\:0e07\:0e19\:0e49\:0e2d\:0e22\:0e01\:0e27\:0e48\:0e32\:0e04\:0e48\:0e32"," "}]],"Threshold",StyleBox[
+RowBox[{" ","\:0e14\:0e31\:0e07\:0e19\:0e31\:0e49\:0e19\:0e08\:0e36\:0e07\:0e44\:0e21\:0e48\:0e40\:0e1b\:0e47\:0e19"," "}]],"spam"}],
+"Text",Background -> RGBColor[1,0.9`,0.8`],CellChangeTimes -> {3934367825.16116`},
+ExpressionUUID -> "7446891f-d00d-428a-958a-52cefe3a3489"],Cell[
+CellGroupData[{Cell[
+BoxData[
+{RowBox[{" ",RowBox[{"spamWin"," ","="," ",RowBox[{"Replace","[",RowBox[{RowBox[{"spamWordProb","[","\"win\"","]"}],","," ",RowBox[
+{RowBox[{"Missing","[",RowBox[{"\"KeyAbsent\"",","," ","\"win\""}],"]"}]," ","\[Rule]"," ","0"}]}],"]"}]}]}],"\n",RowBox[
+{" ",RowBox[{"hamWin"," ","="," ",RowBox[{"Replace","[",RowBox[{RowBox[{"hamWordProb","[","\"win\"","]"}],","," ",RowBox[
+{RowBox[{"Missing","[",RowBox[{"\"KeyAbsent\"",","," ","\"win\""}],"]"}]," ","\[Rule]"," ","0"}]}],"]"}]}]}],"\n",RowBox[
+{" ",RowBox[{"probSpamWin"," ","="," ",RowBox[{"N","[",RowBox[{"spamWin","/",RowBox[
+{"(",RowBox[{"spamWin","+","hamWin"}],")"}]}],"]"}]}]}]}],"Code",CellChangeTimes -> {{3934368533.893235`,3934368594.6068773`}},
+CellLabel -> "In[35]:= ",ExpressionUUID -> "bd0ea89b-dc62-414e-8102-a2dfe4dcd400"],Cell[
+BoxData[
+FractionBox["3","374"],StandardForm],"Output",CellLabel -> "Out[35]= ",ExpressionUUID -> "5738270d-023a-4c16-9921-22a584059c69"],Cell[
+BoxData[
+"0",StandardForm],"Output",CellLabel -> "Out[36]= ",ExpressionUUID -> "01a51213-abdb-46eb-b20f-f4fae9363878"],Cell[
+BoxData[
+"1.`",StandardForm],"Output",CellLabel -> "Out[37]= ",ExpressionUUID -> "d28d1ea6-3cab-4299-9254-0dd03786f040"]},
+Open],ExpressionUUID -> "bbc9a74e-dd87-4589-b60b-10c520cf4628"],Cell[
+"\<\:0e40\:0e02\:0e35\:0e22\:0e19\:0e04\:0e33\:0e15\:0e2d\:0e1a\>",
+"Text",CellChangeTimes -> {{3934367795.5798707`,3934367815.3559723`},3934368530.6189113`},
+ExpressionUUID -> "6e51f515-c7f5-4178-9c68-82c3d0c2fb54"],Cell[
+TextData[{StyleBox[
+RowBox[{"\:0e04\:0e27\:0e32\:0e21\:0e19\:0e48\:0e32\:0e08\:0e30\:0e40\:0e1b\:0e47\:0e19\:0e17\:0e35\:0e48\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21"," ","\""}]],"Win",StyleBox[
+RowBox[{"\""," ","\:0e08\:0e30\:0e40\:0e1b\:0e47\:0e19\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21\:0e2a\:0e41\:0e1b\:0e21\:0e40\:0e17\:0e48\:0e32\:0e01\:0e31\:0e1a"," "}]],"1",StyleBox[
+RowBox[{" ","\:0e0b\:0e36\:0e48\:0e07\:0e21\:0e32\:0e01\:0e01\:0e27\:0e48\:0e32\:0e04\:0e48\:0e32"," "}]],"Threshold",StyleBox[
+RowBox[{" ","\:0e14\:0e31\:0e07\:0e19\:0e31\:0e49\:0e19\:0e08\:0e36\:0e07\:0e40\:0e1b\:0e47\:0e19"," "}]],"spam"}],
+"Text",Background -> RGBColor[1,0.9`,0.8`],CellChangeTimes -> {3934367825.16116`},
+ExpressionUUID -> "8198fbe5-235a-4ce8-8b14-d7698c85fdf1"],Cell[
+CellGroupData[{Cell[
+BoxData[
+{RowBox[{" ",RowBox[{"spamNew"," ","="," ",RowBox[{"Replace","[",RowBox[{RowBox[{"spamWordProb","[","\"new\"","]"}],","," ",RowBox[
+{RowBox[{"Missing","[",RowBox[{"\"KeyAbsent\"",","," ","\"new\""}],"]"}]," ","\[Rule]"," ","0"}]}],"]"}]}]}],"\n",RowBox[
+{" ",RowBox[{"hamNew"," ","="," ",RowBox[{"Replace","[",RowBox[{RowBox[{"hamWordProb","[","\"new\"","]"}],","," ",RowBox[
+{RowBox[{"Missing","[",RowBox[{"\"KeyAbsent\"",","," ","\"new\""}],"]"}]," ","\[Rule]"," ","0"}]}],"]"}]}]}],"\n",RowBox[
+{" ",RowBox[{"probSpamNew"," ","="," ",RowBox[{"N","[",RowBox[{"spamNew","/",RowBox[
+{"(",RowBox[{"spamNew","+","hamNew"}],")"}]}],"]"}]}]}]}],"Code",CellChangeTimes -> {{3934368533.893235`,3934368624.2528543`}},
+CellLabel -> "In[38]:= ",ExpressionUUID -> "af4bb6da-f973-443d-9270-ec0846130f74"],Cell[
+BoxData[
+FractionBox["2","187"],StandardForm],"Output",CellLabel -> "Out[38]= ",ExpressionUUID -> "7f397dc1-8f9c-4b71-879d-03ddda9670be"],Cell[
+BoxData[
+"0",StandardForm],"Output",CellLabel -> "Out[39]= ",ExpressionUUID -> "2d458c3a-5f4b-400a-a2b9-07826fe6aa72"],Cell[
+BoxData[
+"1.`",StandardForm],"Output",CellLabel -> "Out[40]= ",ExpressionUUID -> "7e26ba8c-bd8b-4859-97e4-444fa407a51c"]},
+Open],ExpressionUUID -> "8ebf0c2e-18a5-444b-9577-49f0dd3a9892"],Cell[
+"\<\:0e40\:0e02\:0e35\:0e22\:0e19\:0e04\:0e33\:0e15\:0e2d\:0e1a\>",
+"Text",CellChangeTimes -> {{3934367795.5798707`,3934367815.3559723`},3934368530.6189113`},
+ExpressionUUID -> "4a571401-1d8e-4d00-a2ae-2fd13be3d552"],Cell[
+TextData[{StyleBox[
+RowBox[{"\:0e04\:0e27\:0e32\:0e21\:0e19\:0e48\:0e32\:0e08\:0e30\:0e40\:0e1b\:0e47\:0e19\:0e17\:0e35\:0e48\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21"," ","\""}]],"New",StyleBox[
+RowBox[{"\""," ","\:0e08\:0e30\:0e40\:0e1b\:0e47\:0e19\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21\:0e2a\:0e41\:0e1b\:0e21\:0e40\:0e17\:0e48\:0e32\:0e01\:0e31\:0e1a"," "}]],"1",StyleBox[
+RowBox[{" ","\:0e0b\:0e36\:0e48\:0e07\:0e21\:0e32\:0e01\:0e01\:0e27\:0e48\:0e32\:0e04\:0e48\:0e32"," "}]],"Threshold",StyleBox[
+RowBox[{" ","\:0e14\:0e31\:0e07\:0e19\:0e31\:0e49\:0e19\:0e08\:0e36\:0e07\:0e40\:0e1b\:0e47\:0e19"," "}]],"spam"}],
+"Text",Background -> RGBColor[1,0.9`,0.8`],CellChangeTimes -> {3934367825.16116`},
+ExpressionUUID -> "154a83dd-f0b6-447b-9511-7bbd66d7ca98"],Cell[
+CellGroupData[{Cell[
+BoxData[
+{RowBox[{" ",RowBox[{"spamThe"," ","="," ",RowBox[{"Replace","[",RowBox[{RowBox[{"spamWordProb","[","\"the\"","]"}],","," ",RowBox[
+{RowBox[{"Missing","[",RowBox[{"\"KeyAbsent\"",","," ","\"the\""}],"]"}]," ","\[Rule]"," ","0"}]}],"]"}]}]}],"\n",RowBox[
+{" ",RowBox[{"hamThe"," ","="," ",RowBox[{"Replace","[",RowBox[{RowBox[{"hamWordProb","[","\"the\"","]"}],","," ",RowBox[
+{RowBox[{"Missing","[",RowBox[{"\"KeyAbsent\"",","," ","\"the\""}],"]"}]," ","\[Rule]"," ","0"}]}],"]"}]}]}],"\n",RowBox[
+{" ",RowBox[{"probSpamThe"," ","="," ",RowBox[{"N","[",RowBox[{"spamThe","/",RowBox[
+{"(",RowBox[{"spamThe","+","hamThe"}],")"}]}],"]"}]}]}]}],"Code",CellChangeTimes -> {{3934368533.893235`,3934368594.6068773`},{3934368628.6440496`,3934368637.012281`}},
+CellLabel -> "In[41]:= ",ExpressionUUID -> "3a05c94b-6101-4973-b024-94bec19a12aa"],Cell[
+BoxData[
+FractionBox["1","187"],StandardForm],"Output",CellLabel -> "Out[41]= ",ExpressionUUID -> "98d2db49-19d8-4e98-932e-62991d42f97d"],Cell[
+BoxData[
+FractionBox["4","107"],StandardForm],"Output",CellLabel -> "Out[42]= ",ExpressionUUID -> "19186e53-12b2-4e54-8839-21a5419c5d43"],Cell[
+BoxData[
+"0.12514619883040937`",StandardForm],"Output",CellLabel -> "Out[43]= ",ExpressionUUID -> "4d0b56f5-9909-429f-bfcc-f44ee8d3c247"]},
+Open],ExpressionUUID -> "427fc140-c821-43c8-94c2-8d6014c387b9"],Cell[
+"\<\:0e40\:0e02\:0e35\:0e22\:0e19\:0e04\:0e33\:0e15\:0e2d\:0e1a\>",
+"Text",CellChangeTimes -> {{3934367795.5798707`,3934367815.3559723`},3934368530.6189113`},
+ExpressionUUID -> "8fa5da8a-a4f3-4c19-a2da-25cedff41771"],Cell[
+TextData[{StyleBox[
+RowBox[{"\:0e04\:0e27\:0e32\:0e21\:0e19\:0e48\:0e32\:0e08\:0e30\:0e40\:0e1b\:0e47\:0e19\:0e17\:0e35\:0e48\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21"," ","\""}]],"The",StyleBox[
+RowBox[{"\""," ","\:0e08\:0e30\:0e40\:0e1b\:0e47\:0e19\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21\:0e2a\:0e41\:0e1b\:0e21\:0e40\:0e17\:0e48\:0e32\:0e01\:0e31\:0e1a"," "}]],"0",".","125146",StyleBox[
+RowBox[{" ","\:0e0b\:0e36\:0e48\:0e07\:0e19\:0e49\:0e2d\:0e22\:0e01\:0e27\:0e48\:0e32\:0e04\:0e48\:0e32"," "}]],"Threshold",StyleBox[
+RowBox[{" ","\:0e14\:0e31\:0e07\:0e19\:0e31\:0e49\:0e19\:0e08\:0e36\:0e07\:0e44\:0e21\:0e48\:0e40\:0e1b\:0e47\:0e19"," "}]],"spam"}],
+"Text",Background -> RGBColor[1,0.9`,0.8`],CellChangeTimes -> {3934367825.16116`},
+ExpressionUUID -> "1ca0353f-58f9-48e1-88d2-2a34a3a74d15"]},Open],ExpressionUUID -> "be5df9cb-218f-428e-9ea9-0e54433d946a"],Cell[
+CellGroupData[
+{Cell[
+"\<Discussion\>","Section",CellChangeTimes -> {{3934368656.7966022`,3934368667.2993574`}},
+ExpressionUUID -> "d0e007dc-4d04-479b-9739-1a9ac58e8f29"],Cell[
+"\<\:0e08\:0e32\:0e01\:0e15\:0e31\:0e27\:0e2d\:0e22\:0e48\:0e32\:0e07\:0e01\:0e32\:0e23\:0e17\:0e33 Bayesian spam filter \:0e41\:0e25\:0e30\:0e1c\:0e25\:0e25\:0e31\:0e1e\:0e17\:0e4c\:0e17\:0e35\:0e48\:0e44\:0e14\:0e49\:0e08\:0e32\:0e01\:0e14\:0e49\:0e32\:0e19\:0e1a\:0e19 \:0e19\:0e31\:0e01\:0e28\:0e36\:0e01\:0e29\:0e32\:0e04\:0e34\:0e14\:0e27\:0e48\:0e32\:0e2a\:0e32\:0e21\:0e32\:0e23\:0e16\:0e43\:0e0a\:0e49\:0e27\:0e34\:0e18\:0e35\:0e43\:0e19\:0e0a\:0e35\:0e27\:0e34\:0e15\:0e08\:0e23\:0e34\:0e07\:0e44\:0e14\:0e49\:0e2b\:0e23\:0e37\:0e2d\:0e44\:0e21\:0e48 \:0e40\:0e1e\:0e23\:0e32\:0e30\:0e2d\:0e30\:0e44\:0e23 \:0e41\:0e25\:0e30\:0e21\:0e35\:0e27\:0e34\:0e18\:0e35\:0e1b\:0e23\:0e31\:0e1a\:0e23\:0e38\:0e07\:0e2b\:0e23\:0e37\:0e2d\:0e44\:0e21\:0e48\:0e2a\:0e32\:0e21\:0e32\:0e23\:0e16\:0e15\:0e2d\:0e1a\:0e15\:0e32\:0e21\:0e04\:0e27\:0e32\:0e21\:0e04\:0e34\:0e14\:0e40\:0e2b\:0e47\:0e19\:0e2a\:0e48\:0e27\:0e19\:0e15\:0e31\:0e27\:0e44\:0e14\:0e49\>",
+"Text",CellChangeTimes -> {{3934368676.060701`,3934368825.413888`}},ExpressionUUID -> "da0bb01d-38cc-4ae9-9a35-2ed18a98af97"],Cell[
+TextData[
+{StyleBox[RowBox[{"\:0e21\:0e35\:0e1b\:0e23\:0e30\:0e42\:0e22\:0e0a\:0e19\:0e4c"," ","\:0e40\:0e1e\:0e23\:0e32\:0e30\:0e2b\:0e32\:0e01"," "}]],"Bayesian"," ","spam"," ","filter",StyleBox[
+RowBox[{" ","\:0e19\:0e33\:0e44\:0e1b\:0e43\:0e0a\:0e49\:0e41\:0e25\:0e30\:0e1e\:0e31\:0e12\:0e19\:0e32\:0e08\:0e19\:0e40\:0e1b\:0e47\:0e19"," "}]],"Model"," ","Machine"," ","Learning",StyleBox[
+RowBox[{" ","\:0e01\:0e47\:0e08\:0e30\:0e2a\:0e32\:0e21\:0e32\:0e23\:0e16\:0e04\:0e31\:0e14\:0e41\:0e22\:0e01\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21\:0e44\:0e14\:0e49\:0e21\:0e35\:0e1b\:0e23\:0e30\:0e2a\:0e34\:0e17\:0e18\:0e34\:0e20\:0e32\:0e1e\:0e21\:0e32\:0e01\:0e02\:0e36\:0e49\:0e19"," ","\:0e2d\:0e22\:0e48\:0e32\:0e07\:0e44\:0e23\:0e01\:0e47\:0e15\:0e32\:0e21\:0e01\:0e47\:0e22\:0e31\:0e07\:0e1e\:0e1a\:0e02\:0e49\:0e2d\:0e40\:0e2a\:0e35\:0e22"," ","\:0e40\:0e1e\:0e23\:0e32\:0e30"," "}]],"Bayesian"," ","spam"," ","filter",StyleBox[
+RowBox[{" ","\:0e44\:0e21\:0e48\:0e44\:0e14\:0e49\:0e21\:0e35\:0e04\:0e27\:0e32\:0e21\:0e41\:0e21\:0e48\:0e19\:0e22\:0e33\:0e21\:0e32\:0e01\:0e40\:0e17\:0e48\:0e32\:0e17\:0e35\:0e48\:0e04\:0e27\:0e23"," ","\:0e40\:0e0a\:0e48\:0e19"," ","\:0e44\:0e21\:0e48\:0e2a\:0e32\:0e21\:0e32\:0e23\:0e16\:0e15\:0e23\:0e27\:0e08\:0e02\:0e49\:0e2d\:0e04\:0e27\:0e32\:0e21\:0e2a\:0e41\:0e1b\:0e21\:0e23\:0e39\:0e1b\:0e41\:0e1a\:0e1a\:0e43\:0e2b\:0e21\:0e48\:0e46\:0e44\:0e14\:0e49"," ","\:0e2b\:0e23\:0e37\:0e2d\:0e2b\:0e32\:0e01"," "}]],"Spammer",StyleBox[
+RowBox[{" ","\:0e23\:0e39\:0e49\:0e04\:0e33\:0e17\:0e35\:0e48\:0e43\:0e0a\:0e49\:0e43\:0e19"," "}]],"filter",StyleBox[
+RowBox[{" ","\:0e01\:0e47\:0e2d\:0e32\:0e08\:0e08\:0e30"," "}]],"bypass",StyleBox[
+RowBox[{" ","\:0e44\:0e14\:0e49\:0e2d\:0e22\:0e48\:0e32\:0e07\:0e07\:0e48\:0e32\:0e22"}]]}],
+"Text",Background -> RGBColor[1,0.9`,0.8`],ExpressionUUID -> "19fdae40-89f1-4536-b23e-614217377d64"]},
+Open],ExpressionUUID -> "c434a447-d8c8-400c-b4c6-c82555ec252c"]},Open],ExpressionUUID -> "c5f7600a-2a4d-49bc-8fe4-eedfc04958e4"]},
+StyleDefinitions -> "Default.nb",FrontEndVersion -> "14.1 for Wolfram Cloud 1.69 (July 16, 2024)"]
