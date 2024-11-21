@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 #include <time.h>
 #include <stdlib.h>
 
@@ -8,7 +7,8 @@ int randomNumber() {
     return rand()%100+1;
 }
 
-void guessNumber(int number) {
+void guessNumber() {
+    int number = randomNumber();
     int i = 0;
     int num;
 
@@ -29,8 +29,6 @@ void guessNumber(int number) {
 }
 
 int main() {
-    int number = randomNumber();
-
-    guessNumber(number);
+    guessNumber();
     return 0;
 }
