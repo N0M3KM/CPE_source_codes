@@ -1,3 +1,1 @@
-
-{
-    int c = 0;
+#include <stdlib.h>
