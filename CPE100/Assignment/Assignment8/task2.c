@@ -1,22 +1,19 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
-
-#define NAME_LENGTH 20
 
 typedef struct studentInfo { 
-    char name[NAME_LENGTH];
+    char name[20];
     int score;
 } studentInfo;
 
 void addNewData(studentInfo student[], int *i) {
-    char newName[NAME_LENGTH];
+    char newName[20];
     int newScore;
 
     while (1) {
         printf("Enter new student name (type \"END\" to sort student score and end the program): ");
         fflush(stdout);
-        scanf("%s", newName);
+        scanf("%19s", newName);
         if (strcmp(newName, "END") == 0) {
             break;
         }
@@ -51,22 +48,18 @@ void sort(studentInfo student[], int count) {
     }
 }
 
-int main() {   
-    char fileName[NAME_LENGTH];
-    int count=0, i=0;
-
-    printf("Enter a number of students in the class: ");
-    scanf("%d", &count);
-
-    studentInfo *student = (studentInfo*)malloc(count * sizeof(studentInfo));
+int main() { 
+    studentInfo student[20];   
+    char fileName[20];
     FILE *input; 
+    int i = 0;
 
     printf("Enter a file name to load student scores: ");
-    scanf("%s", fileName);
+    scanf("%19s", fileName);
 
     input = fopen(fileName, "r");
 
-    while (fscanf(input, "%s %d", student[i].name, &student[i].score) == 2) {
+    while (fscanf(input, "%19s %d", student[i].name, &student[i].score) == 2) {
         printf("Student %d: %s, Score = %d\n", i + 1, student[i].name, student[i].score);
         i++;
     }
@@ -83,8 +76,6 @@ int main() {
         printf("Student %d: %s, Score = %d\n", c + 1, student[c].name, student[c].score);
     }
     
-    free(student);
-
     printf("End of program. Goodbye.\n");
     return 0;
 }

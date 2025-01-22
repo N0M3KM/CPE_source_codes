@@ -12,7 +12,7 @@ int isAllDigit(char arr[]) {
 }
 
 int main() {
-    char arr[101] = "1115151";
+    char arr[101] = "0009999";
     if (isAllDigit(arr)) {
         printf("Is all digit\n");
     } else {

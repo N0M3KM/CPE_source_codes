@@ -10,7 +10,6 @@ int isAllDigitPtr(char* arr) {
     }
     return 1;
 }
-
 int isAllDigit(char arr[]) {
     int i = 0;
     while (arr[i]!='\0') {
@@ -21,7 +20,6 @@ int isAllDigit(char arr[]) {
     }
     return 1;
 }
-
 void getInput() {
     while (1) {
         char arr[100];
@@ -29,6 +27,7 @@ void getInput() {
         scanf("%s", arr);
 
         if (strcmp(arr, "END")==0) {
+            printf("End of the program. Goodbye...");
             break;
         }
 
@@ -39,7 +38,6 @@ void getInput() {
         }
     }
 }
-
 int main() {
     getInput();
     return 0;
